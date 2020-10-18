@@ -1,11 +1,7 @@
 Este programa desarrollado en python ayuda a la búsqueda de aquellas webs que utilizan google analytics pero 
 no avisan de ello al usuario. 
 El programa está desarrollado usando las siguientes librerías, las cuales deberán estar instaladas en su 
-sistema operativo correspondiente:
-
-pip install urllib3
-pip install colorama
-(Kali Linux)
+sistema operativo correspondiente
 
 A rasgos generales el programa lee del fichero "url.txt" las urls que queremos comprobar. En el fichero
 "retry.txt" se guardarán aquellas urls a las cuales no se ha podido acceder (por errores de certificados,
