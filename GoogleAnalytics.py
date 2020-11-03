@@ -12,26 +12,32 @@ print("                                   ")
 print(Fore.BLUE+"                                                                               ")
 print(Fore.RESET)
 
-# Apertura de ficheros necesarios
-rutaClave="google-analytics"
+# Palabras clave de detección de Google Analytics
+key_1 = "google-analytics"
+key_2 = "gtag.js"
+key_3 = "ga.js"
+key_4 = "analytics.js"
+
+# Apertura del fichero de urls
 f = open("url.txt", "r")
 
 # Procesado de argumentos
 parser = argparse.ArgumentParser()
-parser.add_argument("-t", "--timeout", help = "Maximum seconds to wait for a response from the server, by default 2")
+parser.add_argument("-t", "--timeout", help = "Maximum seconds to wait for a response from the server, by default 1." +
+" Please note that for low timeouts you may not get a response from the web page. Accepted formats: x.x(decimal) / x(integer)")
 parser.add_argument("-r", "--retry", help = "Generation file where the urls that cannot be accessed will be collected")
 parser.add_argument("-o", "--output", help = "Generation of file where the results will be collected")
 args = parser.parse_args()
 
 # Procesado de timeout
-segundos = 2
+segundos = 1.0
 if args.timeout:
     try: 
-        segundos = int(args.timeout)
-        if segundos < 2:
+        segundos = float(args.timeout)
+        if segundos < 1.0:
             exit()
     except:
-        print("Timeout must be a number greater than 1\n")
+        print("Timeout must be a number greater than 0\n")
         exit()
 
 # Procesado de retry
@@ -52,8 +58,9 @@ for linea in f:
         context = ssl._create_unverified_context()
         respuesta = urllib.request.urlopen(linea.strip(), timeout=segundos, context=context)
         contenidoWeb = respuesta.read().decode("UTF-8")
-        if((contenidoWeb.find(rutaClave) >= 0) and (contenidoWeb.find("usamos cookies") < 0)
-	and (contenidoWeb.find("utilizamos cookies") < 0)
+        if(((contenidoWeb.find(key_1) >= 0) or (contenidoWeb.find(key_2) >= 0) or (contenidoWeb.find(key_3) >= 0) or (contenidoWeb.find(key_4) >= 0)) 
+        and (contenidoWeb.find("usamos cookies") < 0)
+	    and (contenidoWeb.find("utilizamos cookies") < 0)
         and (contenidoWeb.find("utiliza cookies") < 0)
         and (contenidoWeb.find("uso de cookies") < 0)
         and (contenidoWeb.find("usa cookies") < 0)
