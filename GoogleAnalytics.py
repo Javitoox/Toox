@@ -15,26 +15,32 @@ print(Fore.RESET)
 # Apertura de ficheros necesarios
 rutaClave="google-analytics"
 f = open("url.txt", "r")
-g = open("GA.txt", "w")
 
 # Procesado de argumentos
 parser = argparse.ArgumentParser()
-parser.add_argument("-t", "--timeout", help = "Maximum seconds to wait for a response from the server, by default 1")
-parser.add_argument("-r", "--retry", help = "Generation file 'retry.txt' where the urls that cannot be accessed will be collected", action="store_true")
+parser.add_argument("-t", "--timeout", help = "Maximum seconds to wait for a response from the server, by default 2")
+parser.add_argument("-r", "--retry", help = "Generation file where the urls that cannot be accessed will be collected")
+parser.add_argument("-o", "--output", help = "Generation of file where the results will be collected")
 args = parser.parse_args()
 
 # Procesado de timeout
-segundos = 1
+segundos = 2
 if args.timeout:
     try: 
         segundos = int(args.timeout)
+        if segundos < 2:
+            exit()
     except:
-        print("Timeout must be a number greater than 0")
+        print("Timeout must be a number greater than 1\n")
         exit()
 
-# Procesado de retry.txt
+# Procesado de retry
 if args.retry:
-    retry = open("retry.txt", "w")
+    retry = open(args.retry, "w")
+
+# Procesado de output
+if args.output:
+    g = open(args.output, "w")
 
 print("If the color is red, that website has Google Analytics but there are not cookies:\n")
 
@@ -55,7 +61,8 @@ for linea in f:
         and (contenidoWeb.find("use cookies") < 0)
         and (contenidoWeb.find("use of cookies") < 0)):
             print(Fore.RED+str(linea))
-            g.write(linea)
+            if args.output:
+                g.write(linea)
         else:
             print(Fore.GREEN+str(linea))
     except:
@@ -64,5 +71,8 @@ for linea in f:
         print(Fore.YELLOW+"This url is incorrect or the server has interrupted the session:",linea)
 
 f.close()
-g.close()
+if args.output:
+    g.close()
+if args.retry:
+    retry.close()
 print(Fore.RESET)
