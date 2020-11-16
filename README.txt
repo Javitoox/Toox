@@ -1,4 +1,4 @@
-Video explicativo: <a href="https://www.youtube.com/watch?v=sr1cYGYr3Bo&ab_channel=JaviMart%C3%ADnez">h</a>
+Video explicativo: https://www.youtube.com/watch?v=sr1cYGYr3Bo&ab_channel=JaviMart%C3%ADnez
 Este programa desarrollado en python ayuda a la búsqueda de aquellas webs que utilizan Google Analytics pero 
 no avisan de ello al usuario.
 
