@@ -19,13 +19,15 @@ key_3 = "ga.js"
 key_4 = "analytics.js"
 
 # Procesado de argumentos
-parser = argparse.ArgumentParser(description="This program has been developed to help search for websites that use Google Analytics and do not notify their users about it")
+parser = argparse.ArgumentParser(description="This program has been developed to help search for websites that use Google Analytics and do not notify their users about it. "+
+"Our found targets will be shown in red on the screen")
 parser.add_argument("-t", "--timeout", help = "Maximum seconds to wait for a response from the server, by default 1." +
 " Please note that for low timeouts you may not get a response from the web page. Accepted formats: x.x(decimal) / x(integer)")
 parser.add_argument("-r", "--retry", help = "Generation of file where the urls that cannot be accessed will be collected. Extension: .txt")
 parser.add_argument("-o", "--output", help = "Generation of file where the results will be collected. Extension: .txt")
-parser.add_argument("-e", "--entry", help = "Input file, which must contain the urls to be analyzed, each one being written on a different line. Extension: .txt", 
+parser.add_argument("-e", "--entry", help = "Required input file, which must contain the urls to be analyzed, each one being written on a different line. Extension: .txt", 
 required=True)
+parser.add_argument("-a", "--analytics", help = "If this option is activated, only those websites that are using google analytics will be searched", action="store_true")
 args = parser.parse_args()
 
 # Procesado de timeout
@@ -65,20 +67,28 @@ for linea in f:
         context = ssl._create_unverified_context()
         respuesta = urllib.request.urlopen(linea.strip(), timeout=segundos, context=context)
         contenidoWeb = respuesta.read().decode("UTF-8")
-        if(((contenidoWeb.find(key_1) >= 0) or (contenidoWeb.find(key_2) >= 0) or (contenidoWeb.find(key_3) >= 0) or (contenidoWeb.find(key_4) >= 0)) 
-        and (contenidoWeb.find("usamos cookies") < 0)
-	    and (contenidoWeb.find("utilizamos cookies") < 0)
-        and (contenidoWeb.find("utiliza cookies") < 0)
-        and (contenidoWeb.find("uso de cookies") < 0)
-        and (contenidoWeb.find("usa cookies") < 0)
-        and (contenidoWeb.find("we use cookies") < 0)
-        and (contenidoWeb.find("use cookies") < 0)
-        and (contenidoWeb.find("use of cookies") < 0)):
-            print(Fore.RED+str(linea))
-            if args.output:
-                g.write(linea)
+        if args.analytics:
+            if((contenidoWeb.find(key_1) >= 0) or (contenidoWeb.find(key_2) >= 0) or (contenidoWeb.find(key_3) >= 0) or (contenidoWeb.find(key_4) >= 0)):
+                print(Fore.RED+str(linea))
+                if args.output:
+                    g.write(linea)
+            else:
+                print(Fore.GREEN+str(linea))
         else:
-            print(Fore.GREEN+str(linea))
+            if(((contenidoWeb.find(key_1) >= 0) or (contenidoWeb.find(key_2) >= 0) or (contenidoWeb.find(key_3) >= 0) or (contenidoWeb.find(key_4) >= 0)) 
+            and (contenidoWeb.find("usamos cookies") < 0)
+            and (contenidoWeb.find("utilizamos cookies") < 0)
+            and (contenidoWeb.find("utiliza cookies") < 0)
+            and (contenidoWeb.find("uso de cookies") < 0)
+            and (contenidoWeb.find("usa cookies") < 0)
+            and (contenidoWeb.find("we use cookies") < 0)
+            and (contenidoWeb.find("use cookies") < 0)
+            and (contenidoWeb.find("use of cookies") < 0)):
+                print(Fore.RED+str(linea))
+                if args.output:
+                    g.write(linea)
+            else:
+                print(Fore.GREEN+str(linea))
     except:
         if args.retry:
             retry.write(linea)
