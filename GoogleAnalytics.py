@@ -18,15 +18,14 @@ key_2 = "gtag.js"
 key_3 = "ga.js"
 key_4 = "analytics.js"
 
-# Apertura del fichero de urls
-f = open("url.txt", "r")
-
 # Procesado de argumentos
-parser = argparse.ArgumentParser()
+parser = argparse.ArgumentParser(description="This program has been developed to help search for websites that use Google Analytics and do not notify their users about it")
 parser.add_argument("-t", "--timeout", help = "Maximum seconds to wait for a response from the server, by default 1." +
 " Please note that for low timeouts you may not get a response from the web page. Accepted formats: x.x(decimal) / x(integer)")
-parser.add_argument("-r", "--retry", help = "Generation file where the urls that cannot be accessed will be collected")
-parser.add_argument("-o", "--output", help = "Generation of file where the results will be collected")
+parser.add_argument("-r", "--retry", help = "Generation of file where the urls that cannot be accessed will be collected. Extension: .txt")
+parser.add_argument("-o", "--output", help = "Generation of file where the results will be collected. Extension: .txt")
+parser.add_argument("-e", "--entry", help = "Input file, which must contain the urls to be analyzed, each one being written on a different line. Extension: .txt", 
+required=True)
 args = parser.parse_args()
 
 # Procesado de timeout
@@ -47,6 +46,14 @@ if args.retry:
 # Procesado de output
 if args.output:
     g = open(args.output, "w")
+
+# Procesado de entry
+if args.entry:
+    try:
+        f = open(args.entry, "r")
+    except:
+        print("No such file or directory:", args.entry,"\n")
+        exit()
 
 print("If the color is red, that website has Google Analytics but there are not cookies:\n")
 
