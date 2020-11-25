@@ -18,4 +18,4 @@ IMPORTANTE: en raras ocasiones el programa no detecta el uso de Google Analytics
 fuente de la página si aparece la palabra clave que buscamos (parece ser que dicha parte que buscamos no se 
 descarga con el código html). Este programa es de ayuda automática a la búsqueda que queremos realizar, no es 
 100% eficaz. 
-# ES NECESARIO BORRAR LAS COOKIES DEL NAVEGADOR ANTES DEL USO DEL PROGRAMA
+# Es necesario el borrado de las cookies de su navegador antes del uso del programa
