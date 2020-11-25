@@ -1,3 +1,5 @@
+# GA-Cookies
+
 Video explicativo: https://www.youtube.com/watch?v=sr1cYGYr3Bo&ab_channel=JaviMart%C3%ADnez
 Este programa desarrollado en python ayuda a la búsqueda de aquellas webs que utilizan Google Analytics pero 
 no avisan de ello al usuario.
@@ -18,4 +20,4 @@ IMPORTANTE: en raras ocasiones el programa no detecta el uso de Google Analytics
 fuente de la página si aparece la palabra clave que buscamos (parece ser que dicha parte que buscamos no se 
 descarga con el código html). Este programa es de ayuda automática a la búsqueda que queremos realizar, no es 
 100% eficaz. 
-# Es necesario el borrado de las cookies de su navegador antes del uso del programa
+Es necesario el borrado de las cookies de su navegador antes del uso del programa
