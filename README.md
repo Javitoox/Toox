@@ -17,4 +17,4 @@ En cuanto a cuestiones técnicas:
 IMPORTANTE: en raras ocasiones el programa no detecta el uso de Google Analytics, aunque en el código 
 fuente de la página si aparece la palabra clave que buscamos (parece ser que dicha parte que buscamos no se 
 descarga con el código html). Este programa es de ayuda automática a la búsqueda que queremos realizar, no es 
-100% eficaz.
+100% eficaz. ES NECESARIO BORRAR LAS COOKIES DEL NAVEGADOR ANTES DEL USO DEL PROGRAMA
