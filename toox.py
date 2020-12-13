@@ -23,14 +23,11 @@ parser = argparse.ArgumentParser(description="This program has been developed to
                                  "other functionalities")
 parser.add_argument("-t", "--timeout", help="Maximum seconds to wait for a response from the server, by default 1." +
                     " Please note that for low timeouts you may not get a response from the web page. Accepted formats: x.x(decimal) / x(integer)")
-parser.add_argument(
-    "-r", "--retry", help="Generation of file where the urls that cannot be accessed will be collected. Extension: .txt")
-parser.add_argument(
-    "-o", "--output", help="Generation of file where the results will be collected. Extension: .txt")
-parser.add_argument("-e", "--entry", help="Required input file, which must contain the urls to be analyzed, each one being written on a different line. Extension: .txt",
-                    required=True)
-parser.add_argument("-a", "--analytics",
-                    help="If this option is activated, only those websites that are using google analytics will be searched", action="store_true")
+parser.add_argument("-r", "--retry", help="Generation of file where the urls that cannot be accessed will be collected. Extension: .txt")
+parser.add_argument("-o", "--output", help="Generation of file where the results will be collected. Extension: .txt")
+parser.add_argument("-e", "--entry", help="Required input file, which must contain the urls to be analyzed, each one being written on a different line. Extension: .txt", required=True)
+parser.add_argument("-a", "--analytics", help="If this option is activated, only those websites that are using google analytics will be searched", action="store_true")
+parser.add_argument("-s", "--secure", help="If this option is activated, the result will indicate if the connection of the pages is secure", action="store_true")
 args = parser.parse_args()
 
 # Procesado de timeout
@@ -52,6 +49,10 @@ if args.retry:
 if args.output:
     g = open(args.output, "w")
 
+# Procesado de secure
+if args.secure:
+    c = open("connections", "w")
+
 # Procesado de entry
 if args.entry:
     try:
@@ -60,7 +61,18 @@ if args.entry:
         print("No such file or directory:", args.entry, "\n")
         exit()
 
-print("If the color is red, that website has Google Analytics but there are not cookies:\n")
+print("If the color of the url is red, that website has Google Analytics but there are not cookies:\n")
+
+# Función para el cálculo de conexiones seguras
+def security (respuesta):
+    url = respuesta.geturl()
+    if url[0:5] == "https":
+        tipo = "["+url+": secure connection]"
+        print(Fore.GREEN+tipo)
+    else:
+        tipo = "["+url+": insecure connection]"
+        print(Fore.RED+tipo)
+        c.write(tipo+"\n")
 
 # Funcionalidad principal del programa
 for linea in f:
@@ -75,7 +87,7 @@ for linea in f:
             if((contenidoWeb.find(key_1) >= 0) or (contenidoWeb.find(key_2) >= 0) or (contenidoWeb.find(key_3) >= 0) or (contenidoWeb.find(key_4) >= 0)):
                 print(Fore.RED+linea)
                 if args.output:
-                    g.write(linea)
+                    g.write(linea+"\n")
             else:
                 print(Fore.GREEN+linea)
         else:
@@ -90,12 +102,14 @@ for linea in f:
                and (contenidoWeb.find("use of cookies") < 0)):
                 print(Fore.RED+linea)
                 if args.output:
-                    g.write(linea)
+                    g.write(linea+"\n")
             else:
                 print(Fore.GREEN+linea)
+        if args.secure:
+            security(respuesta)
     except:
         if args.retry:
-            retry.write(linea)
+            retry.write(linea+"\n")
         print(Fore.YELLOW+"This url is incorrect or the server has interrupted the session:", linea)
 
 f.close()
@@ -103,4 +117,6 @@ if args.output:
     g.close()
 if args.retry:
     retry.close()
+if args.secure:
+    c.close()
 print(Fore.RESET)
