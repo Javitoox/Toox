@@ -49,10 +49,6 @@ if args.retry:
 if args.output:
     g = open(args.output, "w")
 
-# Procesado de secure
-if args.secure:
-    c = open("connections", "w")
-
 # Procesado de entry
 if args.entry:
     try:
@@ -61,7 +57,11 @@ if args.entry:
         print("No such file or directory:", args.entry, "\n")
         exit()
 
-print("If the color of the url is red, that website has Google Analytics but there are not cookies:\n")
+# Mensajes de información
+if args.analytics:
+    print("If the color of the url is red, that website has Google Analytics:\n")
+else:
+    print("If the color of the url is red, that website has Google Analytics but there are not cookies:\n")
 
 # Función para el cálculo de conexiones seguras
 def security (respuesta):
@@ -72,7 +72,8 @@ def security (respuesta):
     else:
         tipo = "["+url+": insecure connection]"
         print(Fore.RED+tipo)
-        c.write(tipo+"\n")
+        if args.output:
+            g.write(tipo+"\n")
 
 # Funcionalidad principal del programa
 for linea in f:
@@ -117,6 +118,4 @@ if args.output:
     g.close()
 if args.retry:
     retry.close()
-if args.secure:
-    c.close()
 print(Fore.RESET)
