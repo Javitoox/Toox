@@ -2,7 +2,7 @@
 
 Video explicativo: https://www.youtube.com/watch?v=sr1cYGYr3Bo&ab_channel=JaviMart%C3%ADnez.
 Este programa desarrollado en python ayuda a la búsqueda de aquellas webs que utilizan Google Analytics pero 
-no avisan de ello al usuario. A parte de tener esta funcionalidad como la principal, se han desarrolado otras
+no avisan de ello al usuario. A parte de tener esta funcionalidad como la principal, se han desarrollado otras
 funcionalidades.
 
 A rasgos generales el programa lee del fichero "url.txt" las urls que queremos comprobar. El progarama mostrará
@@ -17,8 +17,6 @@ En cuanto a cuestiones técnicas:
   extraemos su código html para realizar una filtración de palabras clave que nos dictarán si se usa Google 
   Analytics y cookies.
 
-IMPORTANTE: en raras ocasiones el programa no detecta el uso de Google Analytics, aunque en el código 
-fuente de la página si aparece la palabra clave que buscamos (parece ser que dicha parte que buscamos no se 
-descarga con el código html). Este programa es de ayuda automática a la búsqueda que queremos realizar, no es 
-100% eficaz. 
-Es necesario el borrado de las cookies de su navegador antes del uso del programa.
+IMPORTANTE: 
+Este programa es de ayuda automática a la búsqueda que queremos realizar, no es 
+100% eficaz. Es necesario el borrado de las cookies de su navegador antes del uso del programa.
